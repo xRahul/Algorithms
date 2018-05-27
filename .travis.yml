@@ -1,3 +1,28 @@
 language: java
 jdk: oraclejdk8
 
+addons:
+  sonarcloud:
+    organization: "xrahul-github" # the key of the org you chose at step #3
+    token:
+      secure: "SDbmt5S3cVkkVj6OzUntyJ+umZsNfySfwXe/ngxDM1BVnsoVlvo0jtaxK1IyDGJxjlYY99sAGR54nQDegFWeQBHwEWBJbOrvY9Aif2sjzK6S7lsBnPydbB8IQOIFyLLraqzrQ4yLAXmVmBipXIovln+CVxctwUPG+6cqgKe+rUAu74e16tzplaQ9srIMfO3xrfQjheIj4ZYFTEBGRJNwxIZs/MdxDPKVYLAJXN9/SSFNvCjkGrRA1eedsdnknY1LGtDcgDd62QayC0+JwOTIZC060B+olHKOPkeFvqPgzDICxog/5X/X7SH+BURZO5jQDY05bteJr2xfJ8885IkVzEoQwt+O9ZCuM51XVIoGWrC9MjnUTrwKmkNUPyY4m6g9BNg0BnLbB75NcOhFeMfmlR2ZZxOxFmjBVO9NbZMtFmg3j8AraxC1a94EpeHY7SVjUCKNJWrL2XqWF4SefKjGiL8LJqy8TyQg+EMsV9vWh7amJD4AP5g6NGcJyrtQvMgLkdMznPezdeMtbJeEUEddRYVYkudHVmMb6retYRaHBYKVSUpD/zxVIg7MpPmXFB1qTbbTeIfiFbn1p64Spvylx+2pVDapj4xf8g912nitMko8UQvQ1PLiJ7ePQlHXoxzhm1dkgZpUrza2u2sETY9JDZjVy8W6BsRm2QyJ2db6nJM="
+
+before_install:
+- chmod +x gradlew
+
+script:
+  - ./gradlew assemble
+  - ./gradlew clean build
+  - ./gradlew build check
+  - ./gradlew sonarqube
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+    - '$HOME/.gradle'
+    - '.gradle'
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/

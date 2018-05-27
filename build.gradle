@@ -1,19 +1,18 @@
 buildscript {
-    ext {
-        springBootVersion = '2.0.2.RELEASE'
-    }
     repositories {
         mavenCentral()
     }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
+}
+
+plugins {
+    id "org.sonarqube" version "2.6.2"
+    id "org.springframework.boot" version "2.0.2.RELEASE"
+    id "io.spring.dependency-management" version "1.0.5.RELEASE"
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+apply plugin: 'idea'
 
 group = 'in.rahulja'
 version = '0.0.1-SNAPSHOT'
