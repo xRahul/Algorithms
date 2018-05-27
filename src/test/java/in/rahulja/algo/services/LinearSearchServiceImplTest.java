@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class LinearSearchServiceImplTest {
 
   @Autowired
-  SearchService<Integer> linearSearchService;
+  private SearchService<Integer> linearSearchService;
 
   @Test
   public void linearSearchIsWorking_whenElementIsPresent() {

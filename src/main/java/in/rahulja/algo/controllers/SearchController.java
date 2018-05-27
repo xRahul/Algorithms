@@ -30,8 +30,8 @@ public class SearchController {
   private SearchService<String> stringBinarySearchService;
 
 
-  /**.
-   * Linear search Ex: /linearSearch?element=9&elementsList=3,6,1,8,2,5,9
+  /**
+   * . Linear search Ex: /linearSearch?element=9&elementsList=3,6,1,8,2,5,9
    *
    * @param element search element
    * @param elementsList list of elements
@@ -41,27 +41,22 @@ public class SearchController {
   public ResponseEntity<Object> linearSearch(@RequestParam(name = "element") String element,
       @RequestParam(name = "elementsList") String elementsList) {
 
+    int index;
+
     if (ListUtil.isAListOfIntegers(elementsList)) {
-      int index = integerLinearSearchService.search(Integer.valueOf(element),
+      index = integerLinearSearchService.search(Integer.valueOf(element),
           ListUtil.getIntegerList(elementsList));
-      if (index != SearchConstants.NOT_FOUND) {
-        return foundResponse(index);
-      }
+    } else {
+      index = stringLinearSearchService.search(element,
+          ListUtil.getStringList(elementsList));
     }
 
-    int index = stringLinearSearchService.search(element,
-        ListUtil.getStringList(elementsList));
-    if (index != SearchConstants.NOT_FOUND) {
-      return foundResponse(index);
-
-    }
-
-    return notFoundResponse();
+    return createResponse(index);
   }
 
 
-  /**.
-   * Binary search Ex: /binarySearch?element=89&elementsList=1,3,5,7,9,13,44,89
+  /**
+   * . Binary search Ex: /binarySearch?element=89&elementsList=1,3,5,7,9,13,44,89
    *
    * @param element search element
    * @param elementsList list of elements
@@ -71,21 +66,24 @@ public class SearchController {
   public ResponseEntity<Object> binarySearch(@RequestParam(name = "element") String element,
       @RequestParam(name = "elementsList") String elementsList) {
 
+    int index;
+
     if (ListUtil.isAListOfIntegers(elementsList)) {
-      int index = integerBinarySearchService.search(Integer.valueOf(element),
+      index = integerBinarySearchService.search(Integer.valueOf(element),
           ListUtil.getIntegerList(elementsList));
-      if (index != SearchConstants.NOT_FOUND) {
-        return foundResponse(index);
-      }
+    } else {
+      index = stringBinarySearchService
+          .search(element, ListUtil.getStringList(elementsList));
     }
 
-    int index = stringBinarySearchService.search(element,
-        ListUtil.getStringList(elementsList));
+    return createResponse(index);
+  }
+
+
+  private ResponseEntity<Object> createResponse(int index) {
     if (index != SearchConstants.NOT_FOUND) {
       return foundResponse(index);
-
     }
-
     return notFoundResponse();
   }
 
@@ -97,10 +95,12 @@ public class SearchController {
         HttpStatus.NOT_FOUND);
   }
 
+
   private ResponseEntity<Object> foundResponse(int index) {
     return new ResponseEntity<>(
         ResponseModel.builder().responseCode(ResponseCode.FOUND)
             .successMessage("found at: " + index).build(),
         HttpStatus.OK);
   }
+
 }

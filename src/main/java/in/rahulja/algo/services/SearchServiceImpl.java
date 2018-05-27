@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class SearchServiceImpl<T> implements SearchService<T> {
 
-  Search<T> search;
+  protected Search<T> search;
 
   private int searchListFor(T element) {
     return search.search(element);
