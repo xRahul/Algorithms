@@ -2,10 +2,12 @@ package in.rahulja.algo.controllers;
 
 import in.rahulja.algo.constants.ResponseCode;
 import in.rahulja.algo.constants.SearchConstants;
+import in.rahulja.algo.constants.SearchType;
 import in.rahulja.algo.models.ResponseModel;
 import in.rahulja.algo.services.SearchService;
 import in.rahulja.algo.utilities.ListUtil;
 import javax.annotation.Resource;
+import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -41,17 +43,7 @@ public class SearchController {
   public ResponseEntity<Object> linearSearch(@RequestParam(name = "element") String element,
       @RequestParam(name = "elementsList") String elementsList) {
 
-    int index;
-
-    if (ListUtil.isAListOfIntegers(elementsList)) {
-      index = integerLinearSearchService.search(Integer.valueOf(element),
-          ListUtil.getIntegerList(elementsList));
-    } else {
-      index = stringLinearSearchService.search(element,
-          ListUtil.getStringList(elementsList));
-    }
-
-    return createResponse(index);
+    return search(SearchType.LINEAR_SEARCH, element, elementsList);
   }
 
 
@@ -66,17 +58,47 @@ public class SearchController {
   public ResponseEntity<Object> binarySearch(@RequestParam(name = "element") String element,
       @RequestParam(name = "elementsList") String elementsList) {
 
+    return search(SearchType.BINARY_SEARCH, element, elementsList);
+
+  }
+
+
+  private ResponseEntity<Object> search(@NonNull final SearchType searchType,
+      @NonNull final String element, @NonNull final String elementsList) {
+
     int index;
+    SearchService<Integer> integerSearchService = getIntegerSearchService(searchType);
+    SearchService<String> stringSearchService = getStringSearchService(searchType);
 
     if (ListUtil.isAListOfIntegers(elementsList)) {
-      index = integerBinarySearchService.search(Integer.valueOf(element),
+      index = integerSearchService.search(Integer.valueOf(element),
           ListUtil.getIntegerList(elementsList));
     } else {
-      index = stringBinarySearchService
+      index = stringSearchService
           .search(element, ListUtil.getStringList(elementsList));
     }
 
     return createResponse(index);
+  }
+
+  private SearchService<String> getStringSearchService(SearchType searchType) {
+    if (searchType == SearchType.LINEAR_SEARCH) {
+      return stringLinearSearchService;
+    } else if (searchType == SearchType.BINARY_SEARCH) {
+      return stringBinarySearchService;
+    }
+
+    return stringLinearSearchService;
+  }
+
+  private SearchService<Integer> getIntegerSearchService(SearchType searchType) {
+    if (searchType == SearchType.LINEAR_SEARCH) {
+      return integerLinearSearchService;
+    } else if (searchType == SearchType.BINARY_SEARCH) {
+      return integerBinarySearchService;
+    }
+
+    return integerLinearSearchService;
   }
 
 
