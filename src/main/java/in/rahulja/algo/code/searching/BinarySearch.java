@@ -32,7 +32,7 @@ public class BinarySearch<T extends Comparable<T>> implements Search<T> {
 
   private int binarySearch(T element, int start, int end) {
 
-    int middle = (start + end) / 2;
+    int middle = getMiddle(start, end);
     T middleElement = list.get(middle);
 
     if (start == end && !Objects.deepEquals(element, middleElement)) {
@@ -43,10 +43,16 @@ public class BinarySearch<T extends Comparable<T>> implements Search<T> {
       return middle;
     }
 
-    return recurseBinarySearch(element, start, end, middle);
+    return recurseBinarySearch(element, start, end);
   }
 
-  private int recurseBinarySearch(T element, int start, int end, int middle) {
+  private int getMiddle(int start, int end) {
+    return (start + end) / 2;
+  }
+
+  private int recurseBinarySearch(T element, int start, int end) {
+    int middle = getMiddle(start, end);
+
     if (element.compareTo(list.get(middle)) < 0) {
       return binarySearch(element, start, middle - 1);
     } else {
