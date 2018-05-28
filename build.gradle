@@ -13,6 +13,7 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'jacoco'
 
 group = 'in.rahulja'
 version = '0.0.1-SNAPSHOT'
@@ -22,6 +23,18 @@ repositories {
     mavenCentral()
 }
 
+jacoco {
+    toolVersion = "0.8.1"
+}
+
+jacocoTestReport {
+    group = "Reporting"
+    reports {
+        xml.enabled true
+        csv.enabled true
+        html.destination file("${buildDir}/reports/coverage")
+    }
+}
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
