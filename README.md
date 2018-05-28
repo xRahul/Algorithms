@@ -17,5 +17,6 @@
 [![SonarCloud Maintainability](https://sonarcloud.io/api/project_badges/measure?project=in.rahulja%3Aalgo&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=in.rahulja%3Aalgo)
 [![SonarCloud Security](https://sonarcloud.io/api/project_badges/measure?project=in.rahulja%3Aalgo&metric=security_rating)](https://sonarcloud.io/dashboard?id=in.rahulja%3Aalgo)
 [![SonarCloud Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=in.rahulja%3Aalgo&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=in.rahulja%3Aalgo)
+[![SonarCloud Coverage](https://sonarcloud.io/api/project_badges/measure?project=in.rahulja%3Aalgo&metric=coverage)](https://sonarcloud.io/dashboard?id=in.rahulja%3Aalgo)
 
 Spring Boot project containing various algorithm implementations
