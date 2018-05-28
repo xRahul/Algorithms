@@ -12,8 +12,9 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ListUtil {
 
-  /**.
-   * get List of Integers from comma separated integer list
+  /**
+   * . get List of Integers from comma separated integer list
+   *
    * @param stringList comma separated integer list
    * @return List of Integers
    */
@@ -27,8 +28,9 @@ public class ListUtil {
 
   }
 
-  /**.
-   * get List of Strings from comma separated String list
+  /**
+   * . get List of Strings from comma separated String list
+   *
    * @param stringList comma separated String list
    * @return List of Strings
    */
@@ -41,7 +43,8 @@ public class ListUtil {
 
   }
 
-  /**.
+  /**
+   * .
    *
    * @param stringList comma separated String list
    * @return true if is list of integers
