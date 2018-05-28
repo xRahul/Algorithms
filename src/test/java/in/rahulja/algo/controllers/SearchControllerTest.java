@@ -10,6 +10,7 @@ import static in.rahulja.algo.constants.SearchTestConstants.UNSORTED_LIST_STRING
 import in.rahulja.algo.constants.ResponseCode;
 import in.rahulja.algo.constants.SearchType;
 import in.rahulja.algo.models.ResponseModel;
+import lombok.NonNull;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,9 +35,7 @@ public class SearchControllerTest {
         .search(SearchType.LINEAR_SEARCH, UNSORTED_LIST_STRING_ABSENT,
             StringUtils.collectionToCommaDelimitedString(UNSORTED_LIST_STRINGS));
 
-    Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    Assert.assertEquals(ResponseCode.NOT_FOUND,
-        ((ResponseModel) response.getBody()).getResponseCode());
+    assertNotFound(response);
   }
 
   @Test
@@ -45,9 +44,7 @@ public class SearchControllerTest {
         .search(SearchType.LINEAR_SEARCH, UNSORTED_LIST_STRING_PRESENT,
             StringUtils.collectionToCommaDelimitedString(UNSORTED_LIST_STRINGS));
 
-    Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-    Assert.assertEquals(ResponseCode.FOUND,
-        ((ResponseModel) response.getBody()).getResponseCode());
+    assertFound(response);
   }
 
 
@@ -57,9 +54,7 @@ public class SearchControllerTest {
         .search(SearchType.BINARY_SEARCH, SORTED_LIST_STRING_ABSENT,
             StringUtils.collectionToCommaDelimitedString(SORTED_LIST_STRINGS));
 
-    Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    Assert.assertEquals(ResponseCode.NOT_FOUND,
-        ((ResponseModel) response.getBody()).getResponseCode());
+    assertNotFound(response);
   }
 
   @Test
@@ -68,9 +63,7 @@ public class SearchControllerTest {
         .search(SearchType.BINARY_SEARCH, SORTED_LIST_STRING_PRESENT,
             StringUtils.collectionToCommaDelimitedString(SORTED_LIST_STRINGS));
 
-    Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-    Assert.assertEquals(ResponseCode.FOUND,
-        ((ResponseModel) response.getBody()).getResponseCode());
+    assertFound(response);
   }
 
 
@@ -80,9 +73,7 @@ public class SearchControllerTest {
         .search(SearchType.JUMP_SEARCH, SORTED_LIST_STRING_ABSENT,
             StringUtils.collectionToCommaDelimitedString(SORTED_LIST_STRINGS));
 
-    Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    Assert.assertEquals(ResponseCode.NOT_FOUND,
-        ((ResponseModel) response.getBody()).getResponseCode());
+    assertNotFound(response);
   }
 
   @Test
@@ -91,9 +82,7 @@ public class SearchControllerTest {
         .search(SearchType.JUMP_SEARCH, SORTED_LIST_STRING_PRESENT,
             StringUtils.collectionToCommaDelimitedString(SORTED_LIST_STRINGS));
 
-    Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-    Assert.assertEquals(ResponseCode.FOUND,
-        ((ResponseModel) response.getBody()).getResponseCode());
+    assertFound(response);
   }
 
 
@@ -103,9 +92,7 @@ public class SearchControllerTest {
         .search(SearchType.EXPONENTIAL_SEARCH, SORTED_LIST_STRING_ABSENT,
             StringUtils.collectionToCommaDelimitedString(SORTED_LIST_STRINGS));
 
-    Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    Assert.assertEquals(ResponseCode.NOT_FOUND,
-        ((ResponseModel) response.getBody()).getResponseCode());
+    assertNotFound(response);
   }
 
   @Test
@@ -114,9 +101,19 @@ public class SearchControllerTest {
         .search(SearchType.EXPONENTIAL_SEARCH, SORTED_LIST_STRING_PRESENT,
             StringUtils.collectionToCommaDelimitedString(SORTED_LIST_STRINGS));
 
+    assertFound(response);
+  }
+
+  private void assertFound(@NonNull ResponseEntity<Object> response) {
     Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-    Assert.assertEquals(ResponseCode.FOUND,
-        ((ResponseModel) response.getBody()).getResponseCode());
+    ResponseModel responseModel = (ResponseModel) response.getBody();
+    Assert.assertEquals(ResponseCode.FOUND, responseModel.getResponseCode());
+  }
+
+  private void assertNotFound(@NonNull ResponseEntity<Object> response) {
+    Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    ResponseModel responseModel = (ResponseModel) response.getBody();
+    Assert.assertEquals(ResponseCode.NOT_FOUND, responseModel.getResponseCode());
   }
 
 }
