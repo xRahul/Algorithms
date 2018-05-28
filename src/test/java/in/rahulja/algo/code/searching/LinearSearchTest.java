@@ -10,6 +10,7 @@ import static in.rahulja.algo.constants.SearchTestConstants.SEARCH_LIST_STRING_P
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import in.rahulja.algo.code.searching.base.Search;
 import javax.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,6 +1,6 @@
 package in.rahulja.algo.code.searching;
 
-import in.rahulja.algo.code.searching.base.LinearSearch;
+import in.rahulja.algo.code.searching.base.BinarySearch;
 import in.rahulja.algo.code.searching.base.Search;
 import in.rahulja.algo.code.searching.base.SearchBase;
 import java.util.List;
@@ -9,16 +9,15 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
 @Component
-public class JumpSearch<T extends Comparable<T>> extends SearchBase<T> implements Search<T> {
+public class ExponentialSearch<T extends Comparable<T>> extends SearchBase<T> implements Search<T> {
 
   @Autowired
-  public JumpSearch(LinearSearch<T> linearSearch) {
-    blockSearch = linearSearch;
+  public ExponentialSearch(BinarySearch<T> binarySearch) {
+    blockSearch = binarySearch;
   }
 
-  public JumpSearch(@NonNull List<T> initialList) {
+  public ExponentialSearch(@NonNull List<T> initialList) {
     setList(initialList);
   }
 
@@ -33,7 +32,7 @@ public class JumpSearch<T extends Comparable<T>> extends SearchBase<T> implement
 
     int pointerAt;
     int size = list.size();
-    int jumpSize = (int) Math.floor(Math.sqrt(size));
+    int jumpSize = 1;
 
     for (pointerAt = 0; pointerAt < size; pointerAt += jumpSize) {
 
@@ -44,6 +43,8 @@ public class JumpSearch<T extends Comparable<T>> extends SearchBase<T> implement
       if (element.compareTo(list.get(pointerAt)) < 0) {
         break;
       }
+
+      jumpSize *= 2;
     }
 
     int blockStartPointer = getBlockStartPosition(pointerAt, jumpSize);

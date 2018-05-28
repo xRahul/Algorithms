@@ -1,18 +1,13 @@
-package in.rahulja.algo.code.searching;
+package in.rahulja.algo.code.searching.base;
 
 import in.rahulja.algo.constants.SearchConstants;
 import java.util.List;
 import java.util.Objects;
-import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BinarySearch<T extends Comparable<T>> implements Search<T> {
-
-  @Getter
-  private List<T> list;
-  private T element;
+public class BinarySearch<T extends Comparable<T>> extends SearchBase<T> implements Search<T> {
 
 
   public BinarySearch() {
@@ -34,7 +29,16 @@ public class BinarySearch<T extends Comparable<T>> implements Search<T> {
   public int search(@NonNull T searchElement) {
     element = searchElement;
 
-    return binarySearch(0, list.size() - 1);
+    if (passedBaseCaseCheck()) {
+      return binarySearch(0, list.size() - 1);
+    }
+
+    return SearchConstants.NOT_FOUND;
+  }
+
+  private boolean passedBaseCaseCheck() {
+    return element.compareTo(list.get(0)) >= 0
+        && element.compareTo(list.get(list.size() - 1)) <= 0;
   }
 
 

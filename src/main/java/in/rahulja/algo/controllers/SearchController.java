@@ -4,7 +4,7 @@ import in.rahulja.algo.constants.ResponseCode;
 import in.rahulja.algo.constants.SearchConstants;
 import in.rahulja.algo.constants.SearchType;
 import in.rahulja.algo.models.ResponseModel;
-import in.rahulja.algo.services.SearchService;
+import in.rahulja.algo.services.code.searching.SearchService;
 import in.rahulja.algo.utilities.ListUtil;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
@@ -26,9 +26,12 @@ public class SearchController {
   @Resource(name = "jumpSearchService")
   private SearchService<String> jumpSearchService;
 
+  @Resource(name = "exponentialSearchService")
+  private SearchService<String> exponentialSearchService;
+
 
   /**
-   * . Linear search Ex: /search?searchType=LINEAR_SEARCH&element=9&elementsList=3,6,1,8,2,5,9 .
+   * Linear search Ex: /search?searchType=LINEAR_SEARCH&element=9&elementsList=3,6,1,8,2,5,9 .
    * Binary Search Ex: /search?searchType=BINARY_SEARCH&element=9&elementsList=1,2,3,4,5,6,8,9
    *
    * @param element search element
@@ -59,6 +62,8 @@ public class SearchController {
         return binarySearchService;
       case JUMP_SEARCH:
         return jumpSearchService;
+      case EXPONENTIAL_SEARCH:
+        return exponentialSearchService;
       default:
     }
 

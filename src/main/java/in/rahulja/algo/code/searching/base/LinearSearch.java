@@ -1,17 +1,13 @@
-package in.rahulja.algo.code.searching;
+package in.rahulja.algo.code.searching.base;
 
 import in.rahulja.algo.constants.SearchConstants;
 import java.util.List;
 import java.util.Objects;
-import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LinearSearch<T> implements Search<T> {
-
-  @Getter
-  private List<T> list;
+public class LinearSearch<T> extends SearchBase<T> implements Search<T> {
 
   public LinearSearch() {
     // empty constructor

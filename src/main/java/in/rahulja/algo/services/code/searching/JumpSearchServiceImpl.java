@@ -1,6 +1,6 @@
-package in.rahulja.algo.services;
+package in.rahulja.algo.services.code.searching;
 
-import in.rahulja.algo.code.searching.Search;
+import in.rahulja.algo.code.searching.base.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

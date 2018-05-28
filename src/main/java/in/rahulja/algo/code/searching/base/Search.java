@@ -1,4 +1,4 @@
-package in.rahulja.algo.code.searching;
+package in.rahulja.algo.code.searching.base;
 
 import java.util.List;
 
