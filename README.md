@@ -19,4 +19,12 @@
 [![SonarCloud Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=in.rahulja%3Aalgo&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=in.rahulja%3Aalgo)
 [![SonarCloud Coverage](https://sonarcloud.io/api/project_badges/measure?project=in.rahulja%3Aalgo&metric=coverage)](https://sonarcloud.io/dashboard?id=in.rahulja%3Aalgo)
 
-Spring Boot project containing various algorithm implementations
+Spring Boot project containing various algorithm implementations.
+
+Algorithms:
+
+* Searching
+  * Linear Search
+  * Binary Search
+  * Jump Search
+  * Exponential Search
