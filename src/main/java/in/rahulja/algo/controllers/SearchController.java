@@ -7,7 +7,6 @@ import in.rahulja.algo.models.ResponseModel;
 import in.rahulja.algo.services.SearchService;
 import in.rahulja.algo.utilities.ListUtil;
 import javax.annotation.Resource;
-import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,110 +18,80 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SearchController {
 
   @Resource(name = "linearSearchService")
-  private SearchService<Integer> integerLinearSearchService;
-
-  @Resource(name = "linearSearchService")
-  private SearchService<String> stringLinearSearchService;
-
+  private SearchService<String> linearSearchService;
 
   @Resource(name = "binarySearchService")
-  private SearchService<Integer> integerBinarySearchService;
+  private SearchService<String> binarySearchService;
 
-  @Resource(name = "binarySearchService")
-  private SearchService<String> stringBinarySearchService;
+  @Resource(name = "jumpSearchService")
+  private SearchService<String> jumpSearchService;
 
 
   /**
-   * . Linear search Ex: /linearSearch?element=9&elementsList=3,6,1,8,2,5,9
+   * . Linear search Ex: /search?searchType=LINEAR_SEARCH&element=9&elementsList=3,6,1,8,2,5,9 .
+   * Binary Search Ex: /search?searchType=BINARY_SEARCH&element=9&elementsList=1,2,3,4,5,6,8,9
    *
    * @param element search element
    * @param elementsList list of elements
    * @return response
    */
-  @GetMapping(value = "/linearSearch", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public ResponseEntity<Object> linearSearch(@RequestParam(name = "element") String element,
+  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResponseEntity<Object> search(
+      @RequestParam(name = "searchType") SearchType searchType,
+      @RequestParam(name = "element") String element,
       @RequestParam(name = "elementsList") String elementsList) {
 
-    return search(SearchType.LINEAR_SEARCH, element, elementsList);
+    SearchService<String> searchService = getSearchService(searchType);
+
+    long startTime = System.nanoTime();
+    int index = searchService.search(element, ListUtil.getStringList(elementsList));
+    long endTime = System.nanoTime();
+
+    return createResponse(index, endTime - startTime);
   }
 
 
-  /**
-   * . Binary search Ex: /binarySearch?element=89&elementsList=1,3,5,7,9,13,44,89
-   *
-   * @param element search element
-   * @param elementsList list of elements
-   * @return response
-   */
-  @GetMapping(value = "/binarySearch", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public ResponseEntity<Object> binarySearch(@RequestParam(name = "element") String element,
-      @RequestParam(name = "elementsList") String elementsList) {
-
-    return search(SearchType.BINARY_SEARCH, element, elementsList);
-
-  }
-
-
-  private ResponseEntity<Object> search(@NonNull final SearchType searchType,
-      @NonNull final String element, @NonNull final String elementsList) {
-
-    int index;
-    SearchService<Integer> integerSearchService = getIntegerSearchService(searchType);
-    SearchService<String> stringSearchService = getStringSearchService(searchType);
-
-    if (ListUtil.isAListOfIntegers(elementsList)) {
-      index = integerSearchService.search(Integer.valueOf(element),
-          ListUtil.getIntegerList(elementsList));
-    } else {
-      index = stringSearchService
-          .search(element, ListUtil.getStringList(elementsList));
+  private SearchService<String> getSearchService(SearchType searchType) {
+    switch (searchType) {
+      case LINEAR_SEARCH:
+        return linearSearchService;
+      case BINARY_SEARCH:
+        return binarySearchService;
+      case JUMP_SEARCH:
+        return jumpSearchService;
+      default:
     }
 
-    return createResponse(index);
-  }
-
-  private SearchService<String> getStringSearchService(SearchType searchType) {
-    if (searchType == SearchType.LINEAR_SEARCH) {
-      return stringLinearSearchService;
-    } else if (searchType == SearchType.BINARY_SEARCH) {
-      return stringBinarySearchService;
-    }
-
-    return stringLinearSearchService;
-  }
-
-  private SearchService<Integer> getIntegerSearchService(SearchType searchType) {
-    if (searchType == SearchType.LINEAR_SEARCH) {
-      return integerLinearSearchService;
-    } else if (searchType == SearchType.BINARY_SEARCH) {
-      return integerBinarySearchService;
-    }
-
-    return integerLinearSearchService;
+    return linearSearchService;
   }
 
 
-  private ResponseEntity<Object> createResponse(int index) {
+  private ResponseEntity<Object> createResponse(int index, long duration) {
     if (index != SearchConstants.NOT_FOUND) {
-      return foundResponse(index);
+      return foundResponse(index, duration);
     }
-    return notFoundResponse();
+    return notFoundResponse(duration);
   }
 
 
-  private ResponseEntity<Object> notFoundResponse() {
+  private ResponseEntity<Object> notFoundResponse(long duration) {
     return new ResponseEntity<>(
         ResponseModel.builder().responseCode(ResponseCode.NOT_FOUND).errorMessage("Not Found")
-            .build(),
+            .executionTime(getExecutionTime(duration)).build(),
         HttpStatus.NOT_FOUND);
   }
 
 
-  private ResponseEntity<Object> foundResponse(int index) {
+  private ResponseEntity<Object> foundResponse(int index, long duration) {
     return new ResponseEntity<>(
         ResponseModel.builder().responseCode(ResponseCode.FOUND)
-            .successMessage("found at: " + index).build(),
+            .successMessage("found at: " + index).executionTime(getExecutionTime(duration)).build(),
         HttpStatus.OK);
+  }
+
+
+  private String getExecutionTime(long duration) {
+    return String.valueOf(duration) + "ns";
   }
 
 }

@@ -4,6 +4,7 @@ import static in.rahulja.algo.constants.SearchTestConstants.SEARCH_LIST_STRINGS;
 import static in.rahulja.algo.constants.SearchTestConstants.SEARCH_LIST_STRING_ABSENT;
 import static in.rahulja.algo.constants.SearchTestConstants.SEARCH_LIST_STRING_PRESENT;
 
+import in.rahulja.algo.constants.SearchType;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,16 +25,18 @@ public class SearchControllerTest {
 
   @Test
   public void testLinearSearch_whenNotFound() {
-    ResponseEntity<Object> response = searchController.linearSearch(SEARCH_LIST_STRING_ABSENT,
-        StringUtils.collectionToCommaDelimitedString(SEARCH_LIST_STRINGS));
+    ResponseEntity<Object> response = searchController
+        .search(SearchType.LINEAR_SEARCH, SEARCH_LIST_STRING_ABSENT,
+            StringUtils.collectionToCommaDelimitedString(SEARCH_LIST_STRINGS));
 
     Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
   }
 
   @Test
   public void testLinearSearch_whenFound() {
-    ResponseEntity<Object> response = searchController.linearSearch(SEARCH_LIST_STRING_PRESENT,
-        StringUtils.collectionToCommaDelimitedString(SEARCH_LIST_STRINGS));
+    ResponseEntity<Object> response = searchController
+        .search(SearchType.LINEAR_SEARCH, SEARCH_LIST_STRING_PRESENT,
+            StringUtils.collectionToCommaDelimitedString(SEARCH_LIST_STRINGS));
 
     Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
   }

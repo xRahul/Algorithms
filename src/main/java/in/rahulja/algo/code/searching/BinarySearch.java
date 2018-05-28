@@ -12,25 +12,33 @@ public class BinarySearch<T extends Comparable<T>> implements Search<T> {
 
   @Getter
   private List<T> list;
+  private T element;
+
 
   public BinarySearch() {
     // empty constructor
   }
 
+
   public BinarySearch(@NonNull List<T> initialList) {
     setList(initialList);
   }
+
 
   public void setList(@NonNull List<T> initialList) {
     list = initialList;
   }
 
+
   @Override
-  public int search(@NonNull T element) {
-    return binarySearch(element, 0, list.size() - 1);
+  public int search(@NonNull T searchElement) {
+    element = searchElement;
+
+    return binarySearch(0, list.size() - 1);
   }
 
-  private int binarySearch(T element, int start, int end) {
+
+  private int binarySearch(int start, int end) {
 
     int middle = getMiddle(start, end);
     T middleElement = list.get(middle);
@@ -43,20 +51,21 @@ public class BinarySearch<T extends Comparable<T>> implements Search<T> {
       return middle;
     }
 
-    return recurseBinarySearch(element, start, end);
+    return recurseBinarySearch(start, end, middle);
   }
+
 
   private int getMiddle(int start, int end) {
     return (start + end) / 2;
   }
 
-  private int recurseBinarySearch(T element, int start, int end) {
-    int middle = getMiddle(start, end);
+
+  private int recurseBinarySearch(int start, int end, int middle) {
 
     if (element.compareTo(list.get(middle)) < 0) {
-      return binarySearch(element, start, middle - 1);
+      return binarySearch(start, middle - 1);
     } else {
-      return binarySearch(element, middle + 1, end);
+      return binarySearch(middle + 1, end);
     }
   }
 }
