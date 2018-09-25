@@ -6,8 +6,8 @@ buildscript {
 
 plugins {
     id "org.sonarqube" version "2.6.2"
-    id "org.springframework.boot" version "2.0.2.RELEASE"
-    id "io.spring.dependency-management" version "1.0.5.RELEASE"
+    id "org.springframework.boot" version "2.0.5.RELEASE"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
 }
 
 apply plugin: 'java'
@@ -25,7 +25,7 @@ repositories {
 }
 
 jacoco {
-    toolVersion = "0.8.1"
+    toolVersion = "0.8.2"
 }
 
 jacocoTestReport {
