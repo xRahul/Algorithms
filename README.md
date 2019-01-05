@@ -5,7 +5,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/xRahul/Algorithms.svg)](https://github.com/xRahul/Algorithms/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/xRahul/Algorithms.svg)](https://github.com/xRahul/Algorithms/network)
 [![GitHub issues](https://img.shields.io/github/issues/xRahul/Algorithms.svg)](https://github.com/xRahul/Algorithms/issues)
-
+[![libraries.io](https://img.shields.io/librariesio/github/xRahul/Algorithms.svg)](https://libraries.io/github/xRahul/Algorithms)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/98df9c5c11964e8f9bc12b17e5229035)](https://www.codacy.com/app/xRahul/Algorithms)
 [![CodeClimate Maintainability](https://api.codeclimate.com/v1/badges/d50b091ccf3a48bcf241/maintainability)](https://codeclimate.com/github/xRahul/Algorithms/maintainability)
