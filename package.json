@@ -22,6 +22,7 @@
     "rest": "^2.0.0"
   },
   "scripts": {
+    "build": "webpack -p",
     "watch": "webpack --watch -d"
   },
   "devDependencies": {

@@ -1,5 +1,12 @@
 language: java
-jdk: oraclejdk8
+jdk:
+  - oraclejdk8
+  - openjdk9
+
+env:
+  - NODE_VERSION=6 CC=clang CXX=clang++
+  - NODE_VERSION=8 CC=clang CXX=clang++
+  - NODE_VERSION=10 CC=clang CXX=clang++
 
 addons:
   sonarcloud:
@@ -9,12 +16,17 @@ addons:
 
 before_install:
 - chmod +x gradlew
+- nvm install $NODE_VERSION
+
+before_script:
+  - npm install
 
 script:
   - ./gradlew assemble
   - ./gradlew clean build
   - ./gradlew build check
   - ./gradlew sonarqube
+  - npm run build
 
 cache:
   directories:
@@ -22,6 +34,7 @@ cache:
     - '$HOME/.sonar/cache'
     - '$HOME/.gradle'
     - '.gradle'
+    - 'node_modules'
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
