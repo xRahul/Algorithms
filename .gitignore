@@ -28,3 +28,6 @@
 
 ### Node ###
 node_modules
+
+### Build files ###
+src/main/resources/static/built/
