@@ -29,7 +29,7 @@
     "@babel/preset-env": "7.1.0",
     "@babel/preset-react": "7.0.0",
     "autoprefixer": "9.1.5",
-    "babel-loader": "8.0.2",
+    "babel-loader": "8.0.5",
     "clean-webpack-plugin": "0.1.19",
     "css-loader": "1.0.0",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
