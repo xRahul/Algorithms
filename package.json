@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/xRahul/Algorithms",
   "dependencies": {
-    "react": "16.7.0",
-    "react-dom": "16.7.0",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
     "rest": "2.0.0"
   },
   "scripts": {
